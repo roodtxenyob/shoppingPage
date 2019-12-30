@@ -1,13 +1,12 @@
 <template>
-  <div class="goodsListItem">
-    <img :src="goodItem.show.img" class="goodsListItemShow" alt="" @load="imgload()">
+  <div class="goodsListItem" @click="goodsListItemClick()">
+    <img v-lazy="goodimg" class="goodsListItemShow" alt="" @load="imgload()">
     <div class="fonter">
       <p>{{goodItem.title}}</p>
       <div class="goodinfo">
         <span class="price">￥{{goodItem.price}}</span>
         <span class=""><img src="~assets/img/common/collect.svg" class="goodsListItemStar" alt="">{{goodItem.cfav}}</span>
       </div>
-
     </div>
   </div>
 </template>
@@ -23,9 +22,26 @@
         }
       }
     },
+    computed:{
+      goodimg(){
+        if (this.goodItem.show) {
+          return this.goodItem.show.img
+        }else if (this.goodItem.image) {
+          return this.goodItem.image
+        }
+      }
+    },
     methods:{
       imgload(){
         this.$Bus.$emit("busimgload" , () => {
+        });
+      },
+      goodsListItemClick(){
+        this.$router.push({
+          path: 'detail',
+          query: {
+            iid: this.goodItem.iid
+          }
         });
       }
     }

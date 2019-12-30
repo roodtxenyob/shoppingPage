@@ -6,7 +6,7 @@ export function request(config) {
     //旧接口
     //baseURL:'http:106.54.54.237:8000',
     //新接口
-    baseURL:'http://106.54.54.237:8000/api/v1',
+    baseURL:'http://106.54.54.237:8000/api/w1',
     //备份接口
     timeout: 10000
   })

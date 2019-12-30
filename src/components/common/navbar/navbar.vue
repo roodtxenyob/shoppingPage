@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar fix" >
+  <div class="navbar fix" :style="textStyle">
     <div id="left" :style="leftStyle"><slot name="left"></slot></div>
     <div id="center" :style="centerStyle"><slot name="center"></slot></div>
     <div id="right" :style="rightStyle"><slot name="right"></slot></div>
@@ -22,6 +22,10 @@
         type: String,
         default: "#f5659f"
       },
+      textColor:{
+        type: String,
+        default: "#ffffff"
+      }
     },
     computed:{
       leftStyle(){
@@ -32,6 +36,9 @@
       },
       rightStyle(){
         return {'background-color': this.rightColor}
+      },
+      textStyle(){
+        return {'color': this.textColor}
       }
     }
   }
@@ -58,7 +65,6 @@
   #center{
     height: 40px;
     flex: 1;
-    color: #ffffff;
     font-size: 16px;
     text-align: center;
     line-height: 38px;

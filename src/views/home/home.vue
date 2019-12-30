@@ -33,6 +33,8 @@
   import tabController from "components/content/tabController/tabController";
   import goodsList from "components/content/goods/goodsList";
   import backTop from "components/content/backTop/backTop";
+
+  import {testMixin} from "common/mixin"
   export default {
     name: "home",
     data(){
@@ -47,11 +49,11 @@
           'new':{page:0,list:[]},
           'sell':{page:0,list:[]}
         },
-        isBackTopShow:false,
         goodsTpye:"pop",
         isShowTabController:false,
-        tabControllerOffsetTop:null,
-        scrollY:null
+        tabControllerOffsetTop:1,
+        scrollY:0,
+        eventBusImgLoadContainer:null
       }
     },
     components:{
@@ -80,14 +82,14 @@
     },
     mounted(){
       const refresn = this.debounce(this.$refs.scroll.refresher, 500);
-      this.$Bus.$on("busimgload" , () => {
+      this.eventBusImgLoadContainer = () => {
         refresn();
         //监听总线事件
         //this.debounce(this.$refs.scroll.refresher, 200);
         //this.$refs.scroll.refresher();
         //刷新高度以方便拉动
-
-      });
+      }
+      this.$Bus.$on("busimgload" , this.eventBusImgLoadContainer);
     },
     methods:{
       debounce(func, delay) {
@@ -113,13 +115,6 @@
           this.$refs.scroll.BScroll.finishPullUp()
         })
       },
-      topclick(){
-        this.$refs.scroll.BScroll.scrollTo(0,0,300);
-        //回到顶部
-      },
-      showevent(event){
-        this.isBackTopShow = event;
-      },
       goodTypeEvent(event){
         this.goodsTpye = Object.keys(this.goods)[event];
         //拿到类里对应索引的键值
@@ -139,7 +134,15 @@
           this.isShowTabController = false;
         }
       }
-    }
+    },
+    activated(){
+      this.$refs.scroll.BScroll.y = this.scrollY * -1;
+    },
+    deactivated(){
+      this.scrollY = this.$refs.scroll.BScroll.y * -1;
+      this.$Bus.$off("busimgload",this.eventBusImgLoadContainer);
+    },
+    mixins:[testMixin]
   }
 </script>
 
@@ -147,6 +150,7 @@
   #home{
     padding-top: 40px;
     position: relative;
+    height: 100vh;
   }
   .scroll{
     position: absolute;

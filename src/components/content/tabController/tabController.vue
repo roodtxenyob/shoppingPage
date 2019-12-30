@@ -19,8 +19,7 @@
     },
     data(){
       return {
-        flag:0,
-
+        flag:0
       }
     },
     methods:{

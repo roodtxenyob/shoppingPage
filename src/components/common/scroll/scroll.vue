@@ -28,13 +28,14 @@
           this.$emit("showevent",false);
         }
         this.$emit("Roll", () => {});
+        //这个逻辑不应该在这里写！！！
+        this.$emit("gundong",position)
+
       });
       this.BScroll.on("pullingUp",() => {
         this.$Bus.$emit("uPward", () => {
         })
       })
-
-
     },
     methods:{
       refresher(){
