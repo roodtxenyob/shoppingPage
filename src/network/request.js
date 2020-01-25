@@ -6,18 +6,20 @@ export function request(config) {
     //旧接口
     //baseURL:'http:106.54.54.237:8000',
     //新接口
-    baseURL:'http://106.54.54.237:8000/api/w1',
+    //baseURL:'http://106.54.54.237:8000/api/w1',
     //备份接口
+    baseURL:'http://106.54.54.237:8000/api/hy',
+    //接口又更新了
     timeout: 10000
   })
-  instance.interceptors.request.use(config =>{
+  instance.interceptors.request.use((config) =>{
     return config
-  },err => {
-
+  },(err) => {
+    console.log(err);
   })
-  instance.interceptors.response.use(res =>{
+  instance.interceptors.response.use((res) =>{
       return res.data
-  },err =>{
+  },(err) =>{
     console.log(err);
   })
   return instance(config);

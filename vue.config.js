@@ -11,5 +11,8 @@ module.exports = {
         'views': '@/views',
       }
     }
+  },
+  devServer:{
+    proxy:'http://localhost:3000'
   }
 }
